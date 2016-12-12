@@ -11,6 +11,10 @@ import javax.swing.colorchooser.ColorSelectionModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import static SPZProductions.FRC.pit.display.SPZProductionsFRCPitDisplayUI.mainDisp;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
 
 /**
@@ -39,7 +43,7 @@ public class SettingsUI extends javax.swing.JFrame {
           }
         };
         model.addChangeListener(changeListener);
-        
+
         ColorSelectionModel model1 = this.textColorPicker.getSelectionModel();
         ChangeListener changeListener1 = new ChangeListener() {
           @Override
@@ -50,6 +54,18 @@ public class SettingsUI extends javax.swing.JFrame {
         };
         model1.addChangeListener(changeListener1);
         
+        AbstractDocument document = (AbstractDocument) eventKeyText.getDocument();
+        document.setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void insertString(DocumentFilter.FilterBypass fb, int offset,String string, AttributeSet attr)throws BadLocationException {
+                super.insertString(fb, offset, string.toUpperCase(), attr);
+            }
+            @Override
+            public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                fb.replace(offset, length, text.toLowerCase(), attrs);
+            }
+        });
+        
         teamSponsorText.setEnabled(false);
         teamMottoText.setEnabled(false);
         teamNameText.setEnabled(false);        
@@ -59,7 +75,7 @@ public class SettingsUI extends javax.swing.JFrame {
         //Update Variables in the Main File
         SPZProductionsFRCPitDisplayUI.teamNumber = Integer.parseInt(teamNumberSpinner.getValue().toString());
         SPZProductionsFRCPitDisplayUI.year = Integer.parseInt(yearSpinner.getValue().toString());
-        SPZProductionsFRCPitDisplayUI.eventKey = eventKeyText.getText();
+        SPZProductionsFRCPitDisplayUI.eventKey = eventKeyText.getText().toLowerCase();
         
         //Update Everything
         mainDisp.moreInit();
