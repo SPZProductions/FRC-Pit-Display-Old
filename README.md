@@ -3,7 +3,7 @@ A Simple to use, easy to understand FRC Pit Display, using the Blue Alliance API
 #### The Pit Display Program can be [Downloaded Here](https://github.com/SPZProductions/FRC-Pit-Display/releases)
 
 ## Development Enviroment Setup Instructions:
-### NetBeans Java SE 8.1
+### NetBeans 8.1 Java SE
 1. Install the latest version of [NetBeans Java SE](https://netbeans.org/downloads/)
 1. Install the latest version of [Java SE Development Kit](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 1. Clone this repository to your development enviroment
