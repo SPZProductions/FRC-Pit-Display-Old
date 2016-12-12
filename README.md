@@ -1,6 +1,6 @@
-# FRC-Pit-Display
+# SPZ Production's FRC Team Pit Display
 A Simple to use, easy to understand FRC Pit Display, using the Blue Alliance API
-##### The Pit Display Program can be [Downloaded Here](https://github.com/SPZProductions/FRC-Pit-Display/releases)
+#### The Pit Display Program can be [Downloaded Here](https://github.com/SPZProductions/FRC-Pit-Display/releases)
 
 ## Development Enviroment Setup Instructions:
 ### NetBeans Java SE 8.1
