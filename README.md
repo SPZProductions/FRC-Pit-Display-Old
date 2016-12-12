@@ -13,5 +13,4 @@ A Simple to use, easy to understand FRC Pit Display, using the Blue Alliance API
 
 This project was developed primarily in NetBeans IDE 8.1 with Java SDK 8 Update
 73 (build 1.8.0_73-b02).
-with Java SDK 8 Update 73 (build 1.8.0_73). <br>
 
