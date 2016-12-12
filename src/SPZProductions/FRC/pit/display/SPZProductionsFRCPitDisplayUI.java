@@ -16,6 +16,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.util.Arrays;
 import java.util.HashMap;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
@@ -38,6 +39,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
     public static SettingsUI settings;
     public static SPZProductionsFRCPitDisplayUI mainDisp;
     private CustomRenderer renderer;
+    public static boolean isFullscreen = false;
     
     public static TBA tba = new TBA();
     public static Event e;
@@ -48,7 +50,6 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
      */
     public SPZProductionsFRCPitDisplayUI() {
         initComponents();
-        
         moreInit();
     }
     
@@ -85,7 +86,6 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         renderer = new CustomRenderer();
         renderer.setHorizontalAlignment( JLabel.CENTER );
         jTable1.getColumnModel().getColumn(3).setCellRenderer( renderer );
-        jTable1.getColumnModel().getColumn(4).setWidth(0);
         
         getTeamMatches(teamNumber);
         
@@ -117,7 +117,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         }  
     }
     
-    public static void resizeNameLabel(){
+    public void resizeNameLabel(){
         Font labelFont = teamNameLabel.getFont();
         String labelText = teamNameLabel.getText();
 
@@ -191,13 +191,13 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             if(Arrays.toString(matches.redTeams).contains("frc" + teamNo) || Arrays.toString(matches.blueTeams).contains("frc" + teamNo)){
                 row++;
                 if(matches.redScore > matches.blueScore){
-                    model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a><b>" + matches.redScore + "</b> - " + matches.blueScore + "</a></html>", "red"});
+                    model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a><b>" + matches.redScore + "</b> - " + matches.blueScore + "</a></html>"});
                     renderer.colorModel.put(row, Color.RED);
                 }else if(matches.redScore < matches.blueScore){
-                    model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a>" + matches.redScore + " - <b>" + matches.blueScore + "</b></a></html>", "blue"});
+                    model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a>" + matches.redScore + " - <b>" + matches.blueScore + "</b></a></html>"});
                     renderer.colorModel.put(row, Color.BLUE);
                 }else{
-                    model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a><b>" + matches.redScore + " - " + matches.blueScore + "</b></a></html>", "tie"});
+                    model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a><b>" + matches.redScore + " - " + matches.blueScore + "</b></a></html>"});
                     renderer.colorModel.put(row, Color.WHITE);
                 }
             } 
@@ -218,7 +218,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         currentRankLabel.setText("Current Rank: " +  i);
     }
     
-    public static void autoSizeColums(){
+    public void autoSizeColums(){
         
         jTable1.setAutoResizeMode( JTable.AUTO_RESIZE_OFF );
         for (int column = 0; column < jTable1.getColumnCount(); column++){
@@ -243,15 +243,16 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             tableColumn.setPreferredWidth( preferredWidth + 80 );
         }
     }
-    
-    public void updateDisplays(){
-        
-    }
-    
-    public void changeBG(Color color){
-        this.getContentPane().setBackground(color);
-    }
    
+    public void changeBG(Color color){
+        getContentPane().setBackground(color);
+    }
+    
+    public void keyPressed(java.awt.event.KeyEvent e){  
+        if (e.getKeyCode() == KeyEvent.VK_F5){
+            System.out.println("test");
+        }      
+    }   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -280,6 +281,11 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         jScrollPane1.setAutoscrolls(true);
         jScrollPane1.setFocusable(false);
         jScrollPane1.setWheelScrollingEnabled(false);
+        jScrollPane1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -287,11 +293,11 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Match Number", "Red Alliance", "Blue Alliance", "Final Score", "whoWon"
+                "Match Number", "Red Alliance", "Blue Alliance", "Final Score"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -301,37 +307,66 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jTable1.setOpaque(false);
         jTable1.setRowHeight(50);
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
             jTable1.getColumnModel().getColumn(1).setResizable(false);
             jTable1.getColumnModel().getColumn(2).setResizable(false);
             jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
         }
 
         teamMottoLabel.setFont(new java.awt.Font("Tahoma", 2, 36)); // NOI18N
         teamMottoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         teamMottoLabel.setText("The G.R.A.Y.T. Leviathons");
         teamMottoLabel.setAlignmentX(0.5F);
+        teamMottoLabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         teamNumberLabel.setFont(new java.awt.Font("Tahoma", 0, 75)); // NOI18N
         teamNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         teamNumberLabel.setText("Team 1322");
         teamNumberLabel.setAlignmentX(0.5F);
+        teamNumberLabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         teamNameLabel.setFont(new java.awt.Font("Tahoma", 0, 75)); // NOI18N
         teamNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         teamNameLabel.setText("The G.R.A.Y.T. Leviathons");
         teamNameLabel.setAlignmentX(0.5F);
+        teamNameLabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         teamNicknameLabel.setFont(new java.awt.Font("Tahoma", 0, 75)); // NOI18N
         teamNicknameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         teamNicknameLabel.setText("The G.R.A.Y.T. Leviathons");
         teamNicknameLabel.setAlignmentX(0.5F);
+        teamNicknameLabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         currentRankLabel.setFont(new java.awt.Font("Tahoma", 0, 60)); // NOI18N
         currentRankLabel.setText("Current Rank:");
+        currentRankLabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -380,6 +415,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        System.out.println("Key Pressed");
         int key = evt.getKeyCode();
         if(key == KeyEvent.VK_F1){
             if(!settings.isVisible()){
@@ -404,15 +440,12 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SPZProductionsFRCPitDisplayUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SPZProductionsFRCPitDisplayUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SPZProductionsFRCPitDisplayUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(SPZProductionsFRCPitDisplayUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        
         //</editor-fold>
         //</editor-fold>
 

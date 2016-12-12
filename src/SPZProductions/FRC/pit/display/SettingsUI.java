@@ -11,6 +11,7 @@ import javax.swing.colorchooser.ColorSelectionModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import static SPZProductions.FRC.pit.display.SPZProductionsFRCPitDisplayUI.mainDisp;
+import javax.swing.JFrame;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -123,6 +124,23 @@ public class SettingsUI extends javax.swing.JFrame {
         mainDisp.getTeamMatches(Integer.parseInt(teamNumberSpinner.getValue().toString()));
     }
     
+    public void fullscreenToggle(){
+        if(!SPZProductionsFRCPitDisplayUI.isFullscreen){
+            mainDisp.dispose();
+            mainDisp.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            mainDisp.setUndecorated(true);
+            mainDisp.setResizable(false);
+            mainDisp.setVisible(true);
+            SPZProductionsFRCPitDisplayUI.isFullscreen = true;
+        }else{
+            mainDisp.dispose();
+            mainDisp.setUndecorated(false);
+            mainDisp.setResizable(true);
+            mainDisp.setVisible(true);
+            SPZProductionsFRCPitDisplayUI.isFullscreen = false;
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -154,6 +172,7 @@ public class SettingsUI extends javax.swing.JFrame {
         textColorPicker = new javax.swing.JColorChooser();
         labelNumber = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         jLabel1.setText("Team Number:");
 
@@ -312,6 +331,13 @@ public class SettingsUI extends javax.swing.JFrame {
 
         colorTabs.addTab("Text Color", textColorTab);
 
+        jButton2.setText("Toggle Fullscreen");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -320,7 +346,8 @@ public class SettingsUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1))
                     .addComponent(colorTabs)
                     .addGroup(layout.createSequentialGroup()
@@ -389,7 +416,9 @@ public class SettingsUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(colorTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap())
         );
 
@@ -439,7 +468,7 @@ public class SettingsUI extends javax.swing.JFrame {
             teamNameText.setEnabled(false);
             t = tba.getTeam(teamNumber);
             SPZProductionsFRCPitDisplayUI.teamNicknameLabel.setText(t.nickname);
-            SPZProductionsFRCPitDisplayUI.resizeNameLabel();
+            mainDisp.resizeNameLabel();
         }
     }//GEN-LAST:event_customTeamNameCheckActionPerformed
 
@@ -454,7 +483,7 @@ public class SettingsUI extends javax.swing.JFrame {
             teamMottoText.setEnabled(false);
             t = tba.getTeam(teamNumber);
             SPZProductionsFRCPitDisplayUI.teamMottoLabel.setText(t.motto);
-            SPZProductionsFRCPitDisplayUI.resizeNameLabel();
+            mainDisp.resizeNameLabel();
         }
     }//GEN-LAST:event_customTeamMottoCheckActionPerformed
 
@@ -469,7 +498,7 @@ public class SettingsUI extends javax.swing.JFrame {
             teamSponsorText.setEnabled(false);
             t = tba.getTeam(teamNumber);
             SPZProductionsFRCPitDisplayUI.teamNameLabel.setText(t.name);
-            SPZProductionsFRCPitDisplayUI.resizeNameLabel();
+            mainDisp.resizeNameLabel();
         }
     }//GEN-LAST:event_customTeamSponsorsCheckActionPerformed
 
@@ -515,6 +544,10 @@ public class SettingsUI extends javax.swing.JFrame {
         SPZProductionsFRCPitDisplayUI.eventKey = eventKeyText.getText();
     }//GEN-LAST:event_eventKeyTextActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        fullscreenToggle();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -559,6 +592,7 @@ public class SettingsUI extends javax.swing.JFrame {
     private javax.swing.JCheckBox customTeamSponsorsCheck;
     private javax.swing.JTextField eventKeyText;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

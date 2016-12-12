@@ -84,6 +84,9 @@
         <Property name="focusable" type="boolean" value="false"/>
         <Property name="wheelScrollingEnabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="formKeyPressed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
@@ -96,22 +99,16 @@
               <Font name="Tahoma" size="36" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="5" rowCount="0">
+              <Table columnCount="4" rowCount="0">
                 <Column editable="false" title="Match Number" type="java.lang.Object"/>
                 <Column editable="false" title="Red Alliance" type="java.lang.Object"/>
                 <Column editable="false" title="Blue Alliance" type="java.lang.Object"/>
                 <Column editable="false" title="Final Score" type="java.lang.Object"/>
-                <Column editable="false" title="whoWon" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="autoResizeMode" type="int" value="4"/>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                   <Title/>
                   <Editor/>
@@ -140,6 +137,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="formKeyPressed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
           </AuxValues>
@@ -155,6 +155,9 @@
         <Property name="text" type="java.lang.String" value="The G.R.A.Y.T. Leviathons"/>
         <Property name="alignmentX" type="float" value="0.5"/>
       </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="formKeyPressed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
@@ -168,6 +171,9 @@
         <Property name="text" type="java.lang.String" value="Team 1322"/>
         <Property name="alignmentX" type="float" value="0.5"/>
       </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="formKeyPressed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="teamNameLabel">
       <Properties>
@@ -178,6 +184,9 @@
         <Property name="text" type="java.lang.String" value="The G.R.A.Y.T. Leviathons"/>
         <Property name="alignmentX" type="float" value="0.5"/>
       </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="formKeyPressed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
@@ -191,6 +200,9 @@
         <Property name="text" type="java.lang.String" value="The G.R.A.Y.T. Leviathons"/>
         <Property name="alignmentX" type="float" value="0.5"/>
       </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="formKeyPressed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
@@ -202,6 +214,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Current Rank:"/>
       </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="formKeyPressed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
