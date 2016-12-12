@@ -89,19 +89,28 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
     }
     
     public void changeTextColor(Color color, int labelNumber){
-         if (labelNumber == 0){
-             teamNumberLabel.setForeground(color);
-         }else if(labelNumber == 1){
-             teamNameLabel.setForeground(color);
-         }else if(labelNumber == 2){
-             teamNicknameLabel.setForeground(color);
-         }else if(labelNumber == 3){
-             teamMottoLabel.setForeground(color);
-         }else if(labelNumber == 4){
-             currentRankLabel.setForeground(color);
-         }else if(labelNumber == 5){
-             jTable1.setForeground(color);
-         }
+        switch (labelNumber) {
+            case 0:
+                teamNumberLabel.setForeground(color);
+                break;
+            case 1:
+                teamNameLabel.setForeground(color);
+                break;
+            case 2:
+                teamNicknameLabel.setForeground(color);
+                break;
+            case 3:
+                teamMottoLabel.setForeground(color);
+                break;
+            case 4:
+                currentRankLabel.setForeground(color);
+                break;
+            case 5:
+                jTable1.setForeground(color);
+                break;
+            default:
+                break;
+        }
          
          
          
@@ -346,9 +355,11 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
                 .addComponent(teamMottoLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(currentRankLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 691, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(130, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(currentRankLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 729, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
