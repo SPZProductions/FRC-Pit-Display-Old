@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.Arrays;
+import java.util.HashMap;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
@@ -36,6 +37,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
     public static String eventKey = "miket";
     public static SettingsUI settings;
     public static SPZProductionsFRCPitDisplayUI mainDisp;
+    private CustomRenderer renderer;
     
     public static TBA tba = new TBA();
     public static Event e;
@@ -46,10 +48,13 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
      */
     public SPZProductionsFRCPitDisplayUI() {
         initComponents();
+        
         moreInit();
     }
     
     public void moreInit(){
+        
+        
         Settings.FIND_TEAM_RANKINGS = true;
         Settings.GET_EVENT_ALLIANCES = true;
         Settings.GET_EVENT_MATCHES = true;
@@ -70,22 +75,21 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         resizeNameLabel();
         teamMottoLabel.setText("\"" + t.motto + "\"");
         teamNicknameLabel.setText(t.nickname);
-        getTeamMatches(teamNumber);
         
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
         jTable1.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
         jTable1.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
         jTable1.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );
-        jTable1.getColumnModel().getColumn(3).setCellRenderer( centerRenderer );
+        
+        renderer = new CustomRenderer();
+        renderer.setHorizontalAlignment( JLabel.CENTER );
+        jTable1.getColumnModel().getColumn(3).setCellRenderer( renderer );
         jTable1.getColumnModel().getColumn(4).setWidth(0);
         
-        DefaultTableCellRenderer colorRenderer = new DefaultTableCellRenderer();
-        colorRenderer.setHorizontalAlignment( JLabel.CENTER );
+        getTeamMatches(teamNumber);
         
         updateRank();
-        
-        
     }
     
     public void changeTextColor(Color color, int labelNumber){
@@ -110,10 +114,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
                 break;
             default:
                 break;
-        }
-         
-         
-         
+        }  
     }
     
     public static void resizeNameLabel(){
@@ -150,7 +151,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         Match[] m = tba.getMatches(eventKey, year);
         Team t = tba.getTeam(teamNumber);
         int row = -1;
-
+        
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         removeAllRows();
         //for each match
@@ -171,25 +172,33 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
                 if(ii <= 1){substring += ", "; ii++;}
                 redTeams += substring;
             }
+            String matchNumber = null;
+            
+            if(matches.match_number < 10){
+                matchNumber = "0" + matches.match_number;
+            }else{
+                matchNumber = "" + matches.match_number;
+            }
+            
             String mn;
             //qm makes no sence to me, change it to Q for Qualifying
             if(matches.comp_level.equals("qm")){
-                mn = "Q " + matches.match_number;
+                mn = "Q " + matchNumber;
             }else{
-                mn = matches.comp_level.toUpperCase() + " " + matches.match_number;
+                mn = matches.comp_level.toUpperCase() + " " + matchNumber;
             }
             
             if(Arrays.toString(matches.redTeams).contains("frc" + teamNo) || Arrays.toString(matches.blueTeams).contains("frc" + teamNo)){
-                
+                row++;
                 if(matches.redScore > matches.blueScore){
                     model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a><b>" + matches.redScore + "</b> - " + matches.blueScore + "</a></html>", "red"});
-                    row ++;
+                    renderer.colorModel.put(row, Color.RED);
                 }else if(matches.redScore < matches.blueScore){
                     model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a>" + matches.redScore + " - <b>" + matches.blueScore + "</b></a></html>", "blue"});
-                    row ++;
+                    renderer.colorModel.put(row, Color.BLUE);
                 }else{
                     model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a><b>" + matches.redScore + " - " + matches.blueScore + "</b></a></html>", "tie"});
-                    row ++;
+                    renderer.colorModel.put(row, Color.WHITE);
                 }
             } 
         }
@@ -417,6 +426,30 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             }
         });
     }
+    
+    public static class CustomRenderer extends DefaultTableCellRenderer{
+
+        //Stores what color you want for rows
+        public HashMap<Integer, Color> colorModel = new HashMap<Integer, Color>();
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table,
+                Object value, boolean isSelected, boolean hasFocus, int row,
+                int column) {
+            //Default Rendering
+            Component result = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            //Change color of background (If necessary)
+            if(colorModel.get(row) != null){
+                setBackground(colorModel.get(row));
+            } else if(!isSelected){
+                setBackground(null);
+            }
+            return result;
+        }
+
+    }
+    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
