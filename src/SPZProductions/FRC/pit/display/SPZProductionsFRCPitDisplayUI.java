@@ -16,7 +16,6 @@ import java.awt.Component;
 import java.awt.Font;
 import java.util.Arrays;
 import java.util.HashMap;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
@@ -40,6 +39,8 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
     public static SPZProductionsFRCPitDisplayUI mainDisp;
     private CustomRenderer renderer;
     public static boolean isFullscreen = false;
+    public static Color headerBgColor = Color.LIGHT_GRAY;
+    public static Color headerFgColor = Color.BLACK;
     
     public static TBA tba = new TBA();
     public static Event e;
@@ -54,7 +55,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
     }
     
     public void moreInit(){
-        
+        changeColor(Color.WHITE, 8);
         
         Settings.FIND_TEAM_RANKINGS = true;
         Settings.GET_EVENT_ALLIANCES = true;
@@ -67,7 +68,6 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         Team t = tba.getTeam(teamNumber);
         
         jScrollPane1.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_NEVER);
-        changeBG(Color.WHITE);
         
         String rookie = "";
         if(Long.toString(t.rookie_year) == String.valueOf(year)){rookie = "Rookie ";}
@@ -86,22 +86,41 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         renderer = new CustomRenderer();
         renderer.setHorizontalAlignment( JLabel.CENTER );
         jTable1.getColumnModel().getColumn(3).setCellRenderer( renderer );
+        jTable1.setRowSelectionAllowed(false);
+        jTable1.setCellSelectionEnabled(false);
         
         getTeamMatches(teamNumber);
+        
+        jTable1.getTableHeader().setDefaultRenderer(new headerColor());
         
         updateRank();
     }
     
-    public void changeTextColor(Color color, int labelNumber){
+    public static class headerColor extends DefaultTableCellRenderer{
+        public headerColor(){
+            setOpaque(true);
+        }
+        @Override
+        public Component getTableCellRendererComponent(JTable mytable, Object value, boolean selected, boolean focused, int row, int column){
+            super.getTableCellRendererComponent(mytable, value, selected, focused, row, column);
+            setBackground(headerBgColor);
+            setForeground(headerFgColor);
+            setFont(new java.awt.Font("Tahoma", 1, 16));
+            setHorizontalAlignment( JLabel.CENTER );
+            return this;
+        }
+    }
+    
+    public void changeColor(Color color, int labelNumber){
         switch (labelNumber) {
             case 0:
                 teamNumberLabel.setForeground(color);
                 break;
             case 1:
-                teamNameLabel.setForeground(color);
+                teamNicknameLabel.setForeground(color);
                 break;
             case 2:
-                teamNicknameLabel.setForeground(color);
+                teamNameLabel.setForeground(color);
                 break;
             case 3:
                 teamMottoLabel.setForeground(color);
@@ -112,6 +131,16 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             case 5:
                 jTable1.setForeground(color);
                 break;
+            case 6:
+                headerBgColor = color;
+                jTable1.getTableHeader().setBackground(color);
+                break;
+            case 7:
+                headerFgColor = color;
+                jTable1.getTableHeader().setForeground(color);
+                break;
+            case 8:
+                getContentPane().setBackground(color);
             default:
                 break;
         }  
@@ -243,16 +272,6 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             tableColumn.setPreferredWidth( preferredWidth + 80 );
         }
     }
-   
-    public void changeBG(Color color){
-        getContentPane().setBackground(color);
-    }
-    
-    public void keyPressed(java.awt.event.KeyEvent e){  
-        if (e.getKeyCode() == KeyEvent.VK_F5){
-            System.out.println("test");
-        }      
-    }   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -305,7 +324,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             }
         });
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        jTable1.setOpaque(false);
+        jTable1.setFocusable(false);
         jTable1.setRowHeight(50);
         jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -420,7 +439,12 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         if(key == KeyEvent.VK_F1){
             if(!settings.isVisible()){
                 settings.setVisible(true);
+            }else{
+                settings.toFront();
+                settings.repaint();
             }
+        }else if(key == KeyEvent.VK_F5 || key == KeyEvent.VK_ESCAPE){
+            settings.fullscreenToggle();
         }
     }//GEN-LAST:event_formKeyPressed
 
@@ -444,11 +468,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(SPZProductionsFRCPitDisplayUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
         
-        //</editor-fold>
-        //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -466,9 +486,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         public HashMap<Integer, Color> colorModel = new HashMap<Integer, Color>();
 
         @Override
-        public Component getTableCellRendererComponent(JTable table,
-                Object value, boolean isSelected, boolean hasFocus, int row,
-                int column) {
+        public Component getTableCellRendererComponent(JTable table,Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             //Default Rendering
             Component result = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
@@ -486,12 +504,12 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel currentRankLabel;
+    public static javax.swing.JLabel currentRankLabel;
     private javax.swing.JScrollPane jScrollPane1;
-    private static javax.swing.JTable jTable1;
+    public static javax.swing.JTable jTable1;
     public static javax.swing.JLabel teamMottoLabel;
     public static javax.swing.JLabel teamNameLabel;
     public static javax.swing.JLabel teamNicknameLabel;
-    private javax.swing.JLabel teamNumberLabel;
+    public static javax.swing.JLabel teamNumberLabel;
     // End of variables declaration//GEN-END:variables
 }

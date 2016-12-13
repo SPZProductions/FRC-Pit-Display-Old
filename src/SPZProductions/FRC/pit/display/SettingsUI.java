@@ -29,31 +29,19 @@ public class SettingsUI extends javax.swing.JFrame {
      */
     public SettingsUI() {
         initComponents();
-        moreInit();
-        
-        
-        
+        moreInit(); 
     }
     
     public void moreInit(){
-        ColorSelectionModel model = backgroundColorPicker.getSelectionModel();
+
+        ColorSelectionModel model = this.textColorPicker.getSelectionModel();
         ChangeListener changeListener = new ChangeListener() {
           @Override
           public void stateChanged(ChangeEvent changeEvent) {
-            mainDisp.changeBG(backgroundColorPicker.getColor());
+            mainDisp.changeColor(textColorPicker.getColor(), labelNumber.getSelectedIndex());
           }
         };
         model.addChangeListener(changeListener);
-
-        ColorSelectionModel model1 = this.textColorPicker.getSelectionModel();
-        ChangeListener changeListener1 = new ChangeListener() {
-          @Override
-          public void stateChanged(ChangeEvent changeEvent) {
-            mainDisp.changeTextColor(textColorPicker.getColor(), labelNumber.getSelectedIndex());
-            System.out.println("Color Changed");
-          }
-        };
-        model1.addChangeListener(changeListener1);
         
         AbstractDocument document = (AbstractDocument) eventKeyText.getDocument();
         document.setDocumentFilter(new DocumentFilter() {
@@ -165,10 +153,6 @@ public class SettingsUI extends javax.swing.JFrame {
         teamSponsorText = new javax.swing.JTextField();
         customTeamMottoCheck = new javax.swing.JCheckBox();
         teamMottoText = new javax.swing.JTextField();
-        colorTabs = new javax.swing.JTabbedPane();
-        backgroundColorTab = new javax.swing.JPanel();
-        backgroundColorPicker = new javax.swing.JColorChooser();
-        textColorTab = new javax.swing.JPanel();
         textColorPicker = new javax.swing.JColorChooser();
         labelNumber = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
@@ -282,54 +266,16 @@ public class SettingsUI extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout backgroundColorTabLayout = new javax.swing.GroupLayout(backgroundColorTab);
-        backgroundColorTab.setLayout(backgroundColorTabLayout);
-        backgroundColorTabLayout.setHorizontalGroup(
-            backgroundColorTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backgroundColorPicker, javax.swing.GroupLayout.PREFERRED_SIZE, 441, Short.MAX_VALUE)
-        );
-        backgroundColorTabLayout.setVerticalGroup(
-            backgroundColorTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundColorTabLayout.createSequentialGroup()
-                .addComponent(backgroundColorPicker, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 36, Short.MAX_VALUE))
-        );
-
-        colorTabs.addTab("Background Color", backgroundColorTab);
-
         textColorPicker.setColor(new java.awt.Color(0, 0, 0));
 
-        labelNumber.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Team Number", "Team Name", "Team Sponsors", "Team Motto", "Team Rank", "Match Table" }));
+        labelNumber.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Team Number", "Team Name", "Team Sponsors", "Team Motto", "Team Rank", "Match Table Text", "Match Table Header Background", "Match Table Header Text", "Display Background" }));
+        labelNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                labelNumberActionPerformed(evt);
+            }
+        });
 
-        jLabel4.setText("Text Color to Change");
-
-        javax.swing.GroupLayout textColorTabLayout = new javax.swing.GroupLayout(textColorTab);
-        textColorTab.setLayout(textColorTabLayout);
-        textColorTabLayout.setHorizontalGroup(
-            textColorTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(textColorTabLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(182, Short.MAX_VALUE))
-            .addComponent(textColorPicker, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-        );
-        textColorTabLayout.setVerticalGroup(
-            textColorTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, textColorTabLayout.createSequentialGroup()
-                .addComponent(textColorPicker, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(textColorTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(textColorTabLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(labelNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(textColorTabLayout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(287, 287, 287))
-        );
-
-        colorTabs.addTab("Text Color", textColorTab);
+        jLabel4.setText("Color to Change");
 
         jButton2.setText("Toggle Fullscreen");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -345,41 +291,50 @@ public class SettingsUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addComponent(colorTabs)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(customTeamMottoCheck)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(teamMottoText))
-                                .addComponent(mottoCheck)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(teamNumberSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(yearSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(customTeamSponsorsCheck)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(teamSponsorText, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(textColorPicker, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(customTeamNameCheck)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(teamNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(sponsorsCheck)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(eventKeyText, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(customTeamMottoCheck)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(teamMottoText))
+                                        .addComponent(mottoCheck)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel1)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(teamNumberSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel3)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(yearSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(customTeamSponsorsCheck)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(teamSponsorText, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(customTeamNameCheck)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(teamNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(sponsorsCheck)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(eventKeyText, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 140, Short.MAX_VALUE)))
+                        .addContainerGap())))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -414,11 +369,18 @@ public class SettingsUI extends javax.swing.JFrame {
                     .addComponent(customTeamMottoCheck)
                     .addComponent(teamMottoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(colorTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textColorPicker, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -548,6 +510,42 @@ public class SettingsUI extends javax.swing.JFrame {
         fullscreenToggle();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void labelNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_labelNumberActionPerformed
+        int selected = labelNumber.getSelectedIndex();
+        
+        switch (selected) {
+            case 0:
+                textColorPicker.setColor(mainDisp.teamNumberLabel.getForeground());
+                break;
+            case 1:
+                textColorPicker.setColor(mainDisp.teamNicknameLabel.getForeground());
+                break;
+            case 2:
+                textColorPicker.setColor(mainDisp.teamNameLabel.getForeground());
+                break;
+            case 3:
+                textColorPicker.setColor(mainDisp.teamMottoLabel.getForeground());
+                break;
+            case 4:
+                textColorPicker.setColor(mainDisp.currentRankLabel.getForeground());
+                break;
+            case 5:
+                textColorPicker.setColor(mainDisp.jTable1.getForeground());
+                break;
+            case 6:
+                textColorPicker.setColor(mainDisp.jTable1.getTableHeader().getBackground());
+                break;
+            case 7:
+                textColorPicker.setColor(mainDisp.jTable1.getTableHeader().getForeground());
+                break;
+            case 8:
+                textColorPicker.setColor(mainDisp.getContentPane().getBackground());
+                break;
+            default:
+                break;
+        }
+    }//GEN-LAST:event_labelNumberActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -584,9 +582,6 @@ public class SettingsUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JColorChooser backgroundColorPicker;
-    private javax.swing.JPanel backgroundColorTab;
-    private javax.swing.JTabbedPane colorTabs;
     private javax.swing.JCheckBox customTeamMottoCheck;
     private javax.swing.JCheckBox customTeamNameCheck;
     private javax.swing.JCheckBox customTeamSponsorsCheck;
@@ -605,7 +600,6 @@ public class SettingsUI extends javax.swing.JFrame {
     private javax.swing.JSpinner teamNumberSpinner;
     private javax.swing.JTextField teamSponsorText;
     private javax.swing.JColorChooser textColorPicker;
-    private javax.swing.JPanel textColorTab;
     private javax.swing.JSpinner yearSpinner;
     // End of variables declaration//GEN-END:variables
 }
