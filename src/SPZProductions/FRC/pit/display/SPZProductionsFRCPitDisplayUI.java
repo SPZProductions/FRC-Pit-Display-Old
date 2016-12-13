@@ -141,6 +141,20 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
                 break;
             case 8:
                 getContentPane().setBackground(color);
+                break;
+            case 9:
+                totalRPLabel.setForeground(color);
+                totalAutoLabel.setForeground(color);
+                totalGoalsLabel.setForeground(color);
+                totalDefencesLabel.setForeground(color);
+                totalPlayedLabel.setForeground(color);
+                totalRecordLabel.setForeground(color);
+                totalScalesLabel.setForeground(color);
+                totalPointsLabel.setForeground(color);
+                break;
+            case 10:
+                jPanel1.setBackground(color);
+                break;
             default:
                 break;
         }  
@@ -244,7 +258,16 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             }
             i++;
         }
-        currentRankLabel.setText("Current Rank: " +  i);
+        currentRankLabel.setText("<html><b>Current Rank: " +  i + "</b></html>");
+        i--;
+        Team tr = e.teams[i];
+        totalRPLabel.setText("Ranking Score: " + tr.rankingScore);
+        totalAutoLabel.setText("Autonomous: " + tr.auto);
+        totalGoalsLabel.setText("Goals: " + tr.goals);
+        totalDefencesLabel.setText("Defences: " + tr.defense);
+        totalPlayedLabel.setText("Total Played Matches: " + tr.played);
+        totalRecordLabel.setText("Record (W-L-T): " + tr.record);
+        totalScalesLabel.setText("Scales/Challenges: " + tr.scaleOrChallenge);
     }
     
     public void autoSizeColums(){
@@ -289,6 +312,16 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         teamNameLabel = new javax.swing.JLabel();
         teamNicknameLabel = new javax.swing.JLabel();
         currentRankLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        totalRPLabel = new javax.swing.JLabel();
+        totalRecordLabel = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        totalPointsLabel = new javax.swing.JLabel();
+        totalAutoLabel = new javax.swing.JLabel();
+        totalDefencesLabel = new javax.swing.JLabel();
+        totalScalesLabel = new javax.swing.JLabel();
+        totalGoalsLabel = new javax.swing.JLabel();
+        totalPlayedLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -353,6 +386,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         teamNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         teamNumberLabel.setText("Team 1322");
         teamNumberLabel.setAlignmentX(0.5F);
+        teamNumberLabel.setPreferredSize(new java.awt.Dimension(1920, 91));
         teamNumberLabel.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
@@ -387,47 +421,174 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
+
+        totalRPLabel.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        totalRPLabel.setText("Ranking Points: 14.0 ");
+        totalRPLabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
+
+        totalRecordLabel.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        totalRecordLabel.setText("Record (W-L-T): 14.0 ");
+        totalRecordLabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setForeground(new java.awt.Color(51, 255, 255));
+        jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
+
+        totalPointsLabel.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        totalPointsLabel.setText("<html><u>Total Points Scored</u></html>");
+        totalPointsLabel.setToolTipText("");
+        totalPointsLabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
+
+        totalAutoLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        totalAutoLabel.setText("Autonomous: 14.0 ");
+        totalAutoLabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
+
+        totalDefencesLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        totalDefencesLabel.setText("Defences: 14.0 ");
+        totalDefencesLabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
+
+        totalScalesLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        totalScalesLabel.setText("Scales/Chalenges: 14.0 ");
+        totalScalesLabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
+
+        totalGoalsLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        totalGoalsLabel.setText("Goals: 120");
+        totalGoalsLabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(totalPointsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(totalScalesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(totalGoalsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(totalAutoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(totalDefencesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(totalPointsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalAutoLabel)
+                    .addComponent(totalDefencesLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalScalesLabel)
+                    .addComponent(totalGoalsLabel))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        totalPlayedLabel.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        totalPlayedLabel.setText("Total Played Matches: 14.0 ");
+        totalPlayedLabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(currentRankLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1187, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(teamMottoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 1920, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(teamNicknameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(teamNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(teamMottoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(teamNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(teamNicknameLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(currentRankLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(264, 264, 264))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(totalRPLabel)
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(totalRecordLabel)
+                                    .addComponent(totalPlayedLabel))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(teamNameLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(teamNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 1920, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(85, 85, 85)
+                .addGap(6, 6, 6)
+                .addComponent(teamNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(teamNicknameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(1, 1, 1)
                 .addComponent(teamNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(teamMottoLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(currentRankLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 759, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(teamNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(1016, Short.MAX_VALUE)))
+                        .addComponent(currentRankLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(totalRPLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(totalRecordLabel)
+                        .addGap(5, 5, 5)
+                        .addComponent(totalPlayedLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(299, 299, 299)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 812, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -505,11 +666,21 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JLabel currentRankLabel;
+    private javax.swing.JLabel jLabel1;
+    public static javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTable1;
     public static javax.swing.JLabel teamMottoLabel;
     public static javax.swing.JLabel teamNameLabel;
     public static javax.swing.JLabel teamNicknameLabel;
     public static javax.swing.JLabel teamNumberLabel;
+    public static javax.swing.JLabel totalAutoLabel;
+    public static javax.swing.JLabel totalDefencesLabel;
+    public static javax.swing.JLabel totalGoalsLabel;
+    public static javax.swing.JLabel totalPlayedLabel;
+    public static javax.swing.JLabel totalPointsLabel;
+    public static javax.swing.JLabel totalRPLabel;
+    public static javax.swing.JLabel totalRecordLabel;
+    public static javax.swing.JLabel totalScalesLabel;
     // End of variables declaration//GEN-END:variables
 }
