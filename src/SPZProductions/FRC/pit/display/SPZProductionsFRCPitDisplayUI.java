@@ -561,7 +561,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             }
         });
 
-        customSponsors.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SPZProductions/FRC/pit/display/ourSponsors.png"))); // NOI18N
+        customSponsors.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SPZProductions/FRC/pit/display/sponsors.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
