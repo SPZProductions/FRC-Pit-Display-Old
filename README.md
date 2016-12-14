@@ -30,7 +30,7 @@ A Simple to use, easy to understand FRC Pit Display, using the Blue Alliance API
 19. Close the Settings Window
 20. Click F5 on your Keyboard to Enter Fullscreen Mode(F5 again or ESC to exit)
 21. Hit F1 on your Keyboard to Re-Open the Settings Window after you closed it
-21. ENJOY!
+22. ENJOY!
 
 ##How to Setup Sponsors
 1. Get Ahold of PNG Versions of your Sponsor's Logos
@@ -42,7 +42,7 @@ A Simple to use, easy to understand FRC Pit Display, using the Blue Alliance API
 7. In the Bottom of the Settings Window, Click on "Refresh Sponsors Image"
 8. If the Sponsors Image does not Apear, Ensure that the File is Named "sponsors.png" and is in the Same Directory as the SPZ_Productions_FRC_Pit_Display.jar file.
 9. Customize the Rest of the Settings the way that you Like
-9. ENJOY!
+10. ENJOY!
 
 
 
