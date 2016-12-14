@@ -3,7 +3,7 @@ A Simple to use, easy to understand FRC Pit Display, using the Blue Alliance API
 #### The Pit Display Program can be [Downloaded Here](https://github.com/SPZProductions/FRC-Pit-Display/releases)
 
 ##How to Use (Basic Step-By-Step):
-###1. Ensure that the computer running the pit display is connect to the internet 
+1. Ensure that the computer running the pit display is connect to the internet 
 2. Download the latest Release from [the Releases Page](https://github.com/SPZProductions/FRC-Pit-Display/releases)
 3. Extract the Downloaded Zip to desired Folder
 4. In a Web Browser, Navigate to https://www.thebluealliance.com/events[https://www.thebluealliance.com/events]
@@ -33,7 +33,7 @@ A Simple to use, easy to understand FRC Pit Display, using the Blue Alliance API
 21. ENJOY!
 
 ##How to Setup Sponsors
-###1. Get Ahold of PNG Versions of your Sponsor's Logos
+1. Get Ahold of PNG Versions of your Sponsor's Logos
 2. Navigate to the Folder where you Extracted the Zip File you Downloaded Earlier
 3. Open the "sponsors.png" File in [pixlr](https://pixlr.com/editor/) (or a picture editor of your choosing, I chose pixlr due to its ability to use clear backgrounds)
 4. Add/Import your Sponsor's Logos, But Do NOT change the size of the file, should be 707px Wide by 401px High
