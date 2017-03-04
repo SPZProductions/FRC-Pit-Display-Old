@@ -10,6 +10,7 @@ import com.cpjd.models.Match;
 import com.cpjd.models.Team;
 import com.cpjd.models.Event;
 import com.cpjd.main.Settings;
+import com.cpjd.models.other.DistrictRanking;
 import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
 import java.awt.Component;
@@ -28,7 +29,7 @@ import javax.swing.table.TableColumn;
 
 
 /**
- *
+ * @author Soren Zaiser, FRC Team 1322
  * @author SPZ Productions
  */
 public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
@@ -42,12 +43,15 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
     public Color headerFgColor = Color.BLACK;
     
     public int teamNumber = 1322;
-    public int year = 2016;
+    public int year = 2017;
     public String eventKey = "miket";
     public TBA tba = new TBA();
     public Event e;
-    public Match[] m;
+    public Match m;
+    public Team[] teams;
     public Team t;
+    public DistrictRanking[] rankings;
+    
     /**
      * Creates new form Team1322PitDisplayUI
      */
@@ -88,14 +92,15 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         Settings.GET_EVENT_ALLIANCES = true;
         Settings.GET_EVENT_MATCHES = true;
         Settings.GET_EVENT_TEAMS = true;
+        Settings.useAPIV3(false);
         
-        tba.setID("team" + teamNumber,"pitDisplay","v1");
+        tba.setID("team" + teamNumber,"pitDisplay","v2");
         Event e = tba.getEvent(eventKey, year);
-        Match[] m = tba.getMatches(eventKey, year);
+        rankings = tba.getDistrictRankings(eventKey, year);
         Team t = tba.getTeam(teamNumber);
         
         String rookie = "";
-        if(Long.toString(t.rookie_year) == String.valueOf(year)){rookie = "Rookie ";}
+        if(Long.toString(t.rookie_year).contains(String.valueOf(year))){rookie = "Rookie ";}
         teamNumberLabel.setText(rookie + "Team " + Long.toString(t.team_number));
         teamNameLabel.setText(t.name);
         resizeNameLabel();
@@ -108,9 +113,8 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
     }
     
     public void update(){
-        tba.setID("team" + teamNumber,"pitDisplay","v1");
+        tba.setID("team" + teamNumber,"spzProductionsPitDisplay","v2");
         Event e = tba.getEvent(eventKey, year);
-        Match[] m = tba.getMatches(eventKey, year);
         Team t = tba.getTeam(teamNumber);
         
         String rookie = "";
@@ -222,17 +226,22 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         
     public void getTeamMatches(int teamNo){
         Event e = tba.getEvent(eventKey, year);
-        Match[] m = tba.getMatches(eventKey, year);
         Team t = tba.getTeam(teamNumber);
         int row = -1;
         
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         removeAllRows();
         //for each match
+        
         for (Match matches : e.matches){
             String blueTeams = "";
             String redTeams = "";
-            
+            boolean nullMatch = false;
+            if(Arrays.toString(matches.scorableItems).contains("null")){
+                nullMatch = true;
+            }
+                
+                     
             int i = 0;
             for (String teams : matches.blueTeams){
                 String substring = teams.substring(3);
@@ -262,19 +271,25 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
                 mn = matches.comp_level.toUpperCase() + " " + matchNumber;
             }
             
-            if(Arrays.toString(matches.redTeams).contains("frc" + teamNo) || Arrays.toString(matches.blueTeams).contains("frc" + teamNo)){
+            if(!nullMatch){
+                if(Arrays.toString(matches.redTeams).contains("frc" + teamNo) || Arrays.toString(matches.blueTeams).contains("frc" + teamNo)){
+                    row++;
+                    if(matches.redScore > matches.blueScore){
+                        model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a><b>" + matches.redScore + "</b> - " + matches.blueScore + "</a></html>"});
+                        renderer.colorModel.put(row, Color.RED);
+                    }else if(matches.redScore < matches.blueScore){
+                        model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a>" + matches.redScore + " - <b>" + matches.blueScore + "</b></a></html>"});
+                        renderer.colorModel.put(row, Color.BLUE);
+                    }else{
+                        model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a><b>" + matches.redScore + " - " + matches.blueScore + "</b></a></html>"});
+                        renderer.colorModel.put(row, Color.WHITE);
+                    }
+                } 
+            }else{
                 row++;
-                if(matches.redScore > matches.blueScore){
-                    model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a><b>" + matches.redScore + "</b> - " + matches.blueScore + "</a></html>"});
-                    renderer.colorModel.put(row, Color.RED);
-                }else if(matches.redScore < matches.blueScore){
-                    model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a>" + matches.redScore + " - <b>" + matches.blueScore + "</b></a></html>"});
-                    renderer.colorModel.put(row, Color.BLUE);
-                }else{
-                    model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a><b>" + matches.redScore + " - " + matches.blueScore + "</b></a></html>"});
-                    renderer.colorModel.put(row, Color.WHITE);
-                }
-            } 
+                  model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a><b>Unplayed</b></a></html>"});
+                  
+            }
         }
         autoSizeColums();
     }
@@ -284,14 +299,15 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         int i = 0;
         for(Team team : e.teams){
             if(team.team_number == teamNumber){
-                i++;
                 break;
             }
             i++;
         }
-        currentRankLabel.setText("<html><b>Current Rank: " +  i + "</b></html>");
-        i--;
         Team tr = e.teams[i];
+        System.out.print(tr.motto);
+        
+        currentRankLabel.setText("<html><b>Current Rank: " + tr.rank + "</b></html>");
+        
         totalRPLabel.setText("<html><b>Ranking Score: </b>" + tr.rankingScore + "</html>");
         totalAutoLabel.setText("<html><b>Autonomous: </b>" + tr.auto + "</html>");
         totalGoalsLabel.setText("<html><b>Goals: </b>" + tr.goals + "</html>");
