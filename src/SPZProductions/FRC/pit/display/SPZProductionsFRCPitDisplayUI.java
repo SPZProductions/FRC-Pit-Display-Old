@@ -112,6 +112,8 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         getTeamMatches(teamNumber);
         
         updateRank();
+        
+        getNextMatch();
     }
     
     public void update(){
@@ -130,7 +132,6 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         getTeamMatches(teamNumber);
         
         updateRank();
-        update.runLoop = true;
     }
     
     public class headerColor extends DefaultTableCellRenderer{
@@ -373,6 +374,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
                     nextMatchLabel.setText("Next Match: " + matches.match_number);
                     nextMatchPartners.setText("Partners: " + redTeams);
                     nextMatchOpponents.setText("Opponents: " + blueTeams);
+                    jPanel2.setBackground(Color.RED);
                     break;
                 }
             }else if(Arrays.toString(matches.blueTeams).contains("frc" + teamNumber)){
@@ -380,12 +382,14 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
                     nextMatchLabel.setText("Next Match: " + matches.match_number);
                     nextMatchPartners.setText("Partners: " + blueTeams);
                     nextMatchOpponents.setText("Opponents: " + redTeams);
+                    jPanel2.setBackground(Color.BLUE);
                     break;
                 }
             }else{
                     nextMatchLabel.setText("No More Scheduled");
                     nextMatchPartners.setText("Matches");
                     nextMatchOpponents.setText("");
+                    jPanel2.setBackground(Color.BLACK);
                     break;
                 }
         }
@@ -445,9 +449,10 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         totalPlayedLabel = new javax.swing.JLabel();
         customSponsors = new javax.swing.JLabel();
-        nextMatchLabel = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         nextMatchOpponents = new javax.swing.JLabel();
         nextMatchPartners = new javax.swing.JLabel();
+        nextMatchLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1920, 1080));
@@ -581,7 +586,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             }
         });
         getContentPane().add(totalRecordLabel);
-        totalRecordLabel.setBounds(10, 560, 707, 58);
+        totalRecordLabel.setBounds(10, 540, 707, 58);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setForeground(new java.awt.Color(51, 255, 255));
@@ -698,31 +703,55 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             }
         });
         getContentPane().add(totalPlayedLabel);
-        totalPlayedLabel.setBounds(10, 620, 707, 58);
+        totalPlayedLabel.setBounds(10, 590, 707, 58);
 
         customSponsors.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SPZProductions/FRC/pit/display/sponsors.png"))); // NOI18N
         getContentPane().add(customSponsors);
         customSponsors.setBounds(10, 770, 680, 300);
 
+        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        nextMatchOpponents.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        nextMatchOpponents.setForeground(new java.awt.Color(255, 255, 255));
+        nextMatchOpponents.setText("Opponents: ");
+
+        nextMatchPartners.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        nextMatchPartners.setForeground(new java.awt.Color(255, 255, 255));
+        nextMatchPartners.setText("Partners: ");
+
         nextMatchLabel.setFont(new java.awt.Font("Tahoma", 0, 60)); // NOI18N
+        nextMatchLabel.setForeground(new java.awt.Color(255, 255, 255));
         nextMatchLabel.setText("Next Match:");
         nextMatchLabel.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 nextMatchLabelformKeyPressed(evt);
             }
         });
-        getContentPane().add(nextMatchLabel);
-        nextMatchLabel.setBounds(0, 280, 707, 73);
 
-        nextMatchOpponents.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        nextMatchOpponents.setText("jLabel2");
-        getContentPane().add(nextMatchOpponents);
-        nextMatchOpponents.setBounds(10, 380, 330, 30);
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(nextMatchLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
+                    .addComponent(nextMatchPartners, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nextMatchOpponents, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addComponent(nextMatchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(nextMatchPartners, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nextMatchOpponents, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
-        nextMatchPartners.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        nextMatchPartners.setText("jLabel2");
-        getContentPane().add(nextMatchPartners);
-        nextMatchPartners.setBounds(10, 350, 330, 30);
+        getContentPane().add(jPanel2);
+        jPanel2.setBounds(0, 280, 680, 140);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -807,6 +836,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
     public javax.swing.JLabel customSponsors;
     private javax.swing.JLabel jLabel1;
     public javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable jTable1;
     public javax.swing.JLabel nextMatchLabel;
