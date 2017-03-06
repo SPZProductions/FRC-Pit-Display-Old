@@ -336,6 +336,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
                     nextMatchLabel.setText("Next Match: " + matches.match_number);
                     nextMatchPartners.setText("Partners: " + redTeams);
                     nextMatchOpponents.setText("Opponents: " + blueTeams);
+                    jPanel2.setBackground(Color.RED);
                     break;
                 }
             }else if(Arrays.toString(matches.blueTeams).contains("frc" + teamNumber)){
@@ -343,12 +344,14 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
                     nextMatchLabel.setText("Next Match: " + matches.match_number);
                     nextMatchPartners.setText("Partners: " + blueTeams);
                     nextMatchOpponents.setText("Opponents: " + redTeams);
+                    jPanel2.setBackground(Color.BLUE);
                     break;
                 }
             }else{
                     nextMatchLabel.setText("No More Scheduled");
                     nextMatchPartners.setText("Matches");
                     nextMatchOpponents.setText("");
+                    jPanel2.setBackground(Color.BLACK);
                     break;
                 }
         }
@@ -432,7 +435,6 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         teamNumberLabel = new javax.swing.JLabel();
         teamNameLabel = new javax.swing.JLabel();
         teamNicknameLabel = new javax.swing.JLabel();
-        nextMatchLabel = new javax.swing.JLabel();
         totalRPLabel = new javax.swing.JLabel();
         totalRecordLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -446,8 +448,10 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         totalPlayedLabel = new javax.swing.JLabel();
         customSponsors = new javax.swing.JLabel();
         currentRankLabel = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         nextMatchOpponents = new javax.swing.JLabel();
         nextMatchPartners = new javax.swing.JLabel();
+        nextMatchLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1366, 768));
@@ -554,16 +558,6 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         getContentPane().add(teamNicknameLabel);
         teamNicknameLabel.setBounds(0, 50, 1360, 40);
 
-        nextMatchLabel.setFont(new java.awt.Font("Tahoma", 0, 44)); // NOI18N
-        nextMatchLabel.setText("Next Match:");
-        nextMatchLabel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                formKeyPressed(evt);
-            }
-        });
-        getContentPane().add(nextMatchLabel);
-        nextMatchLabel.setBounds(0, 190, 420, 40);
-
         totalRPLabel.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
         totalRPLabel.setText("Ranking Points: 14.0 ");
         totalRPLabel.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -572,7 +566,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             }
         });
         getContentPane().add(totalRPLabel);
-        totalRPLabel.setBounds(0, 310, 440, 50);
+        totalRPLabel.setBounds(0, 330, 440, 50);
 
         totalRecordLabel.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
         totalRecordLabel.setText("Record (W-L-T): 14.0 ");
@@ -582,7 +576,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             }
         });
         getContentPane().add(totalRecordLabel);
-        totalRecordLabel.setBounds(0, 340, 440, 50);
+        totalRecordLabel.setBounds(0, 360, 440, 50);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setForeground(new java.awt.Color(51, 255, 255));
@@ -703,7 +697,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             }
         });
         getContentPane().add(totalPlayedLabel);
-        totalPlayedLabel.setBounds(0, 370, 440, 50);
+        totalPlayedLabel.setBounds(0, 390, 440, 50);
 
         customSponsors.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SPZProductions/FRC/pit/display/sponsors.png"))); // NOI18N
         getContentPane().add(customSponsors);
@@ -717,17 +711,49 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             }
         });
         getContentPane().add(currentRankLabel);
-        currentRankLabel.setBounds(0, 270, 420, 50);
+        currentRankLabel.setBounds(0, 290, 420, 50);
 
         nextMatchOpponents.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        nextMatchOpponents.setForeground(new java.awt.Color(255, 255, 255));
         nextMatchOpponents.setText("Opponents:");
-        getContentPane().add(nextMatchOpponents);
-        nextMatchOpponents.setBounds(0, 250, 410, 20);
 
         nextMatchPartners.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        nextMatchPartners.setForeground(new java.awt.Color(255, 255, 255));
         nextMatchPartners.setText("Alliance: ");
-        getContentPane().add(nextMatchPartners);
-        nextMatchPartners.setBounds(0, 230, 410, 20);
+
+        nextMatchLabel.setFont(new java.awt.Font("Tahoma", 0, 44)); // NOI18N
+        nextMatchLabel.setForeground(new java.awt.Color(255, 255, 255));
+        nextMatchLabel.setText("Next Match:");
+        nextMatchLabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nextMatchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nextMatchPartners, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nextMatchOpponents, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 10, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(nextMatchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nextMatchPartners, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nextMatchOpponents, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 18, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanel2);
+        jPanel2.setBounds(0, 180, 420, 110);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -812,6 +838,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
     public javax.swing.JLabel customSponsors;
     private javax.swing.JLabel jLabel1;
     public javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable jTable1;
     public javax.swing.JLabel nextMatchLabel;
