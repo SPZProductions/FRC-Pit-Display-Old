@@ -22,6 +22,7 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
+//import static javax.swing.JFrame.update;
 
 
 
@@ -134,6 +135,7 @@ public class SettingsUI extends javax.swing.JFrame {
             mainDisp.setVisible(true);
             mainDisp.isFullscreen = false;
         }
+        mainDisp.getNextMatch();
     }
     
     /**
