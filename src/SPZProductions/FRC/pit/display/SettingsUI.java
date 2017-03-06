@@ -24,6 +24,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
 
+
 /**
  *
  * @author SPZ Productions
@@ -655,7 +656,7 @@ public class SettingsUI extends javax.swing.JFrame {
                 colorPicker.setColor(mainDisp.getContentPane().getBackground());
                 break;
             case 9:
-                colorPicker.setColor(mainDisp.totalAutoLabel.getForeground());
+                colorPicker.setColor(mainDisp.totalMatchLabel.getForeground());
                 break;
             case 10:
                 colorPicker.setColor(mainDisp.jPanel1.getBackground());
