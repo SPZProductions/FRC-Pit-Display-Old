@@ -653,7 +653,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
 
         customSponsors.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SPZProductions/FRC/pit/display/sponsors.png"))); // NOI18N
         getContentPane().add(customSponsors);
-        customSponsors.setBounds(10, 1031, 707, 140);
+        customSponsors.setBounds(10, 770, 680, 300);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

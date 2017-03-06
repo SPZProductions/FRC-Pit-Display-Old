@@ -196,6 +196,7 @@ public class SettingsUI extends javax.swing.JFrame {
         eventKeyLabel.setText("Blue Alliance Event Code: ");
 
         yearLabel.setText("Year: ");
+        yearLabel.setEnabled(false);
 
         updateAllButton.setText("Update All");
         updateAllButton.addActionListener(new java.awt.event.ActionListener() {
@@ -220,6 +221,7 @@ public class SettingsUI extends javax.swing.JFrame {
 
         yearSpinner.setModel(new javax.swing.SpinnerNumberModel());
         yearSpinner.setEditor(new javax.swing.JSpinner.NumberEditor(yearSpinner, "0000"));
+        yearSpinner.setEnabled(false);
         yearSpinner.setValue(mainDisp.year);
         yearSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
