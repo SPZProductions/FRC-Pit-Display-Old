@@ -22,6 +22,7 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
+//import static javax.swing.JFrame.update;
 
 
 
@@ -117,6 +118,7 @@ public class SettingsUI extends javax.swing.JFrame {
         teamNameText.setEnabled(true);
         
         mainDisp.getTeamMatches(Integer.parseInt(teamNumberSpinner.getValue().toString()));
+        mainDisp.getNextMatch();
     }
     
     public void fullscreenToggle(){
@@ -131,6 +133,7 @@ public class SettingsUI extends javax.swing.JFrame {
             mainDisp.dispose();
             mainDisp.setUndecorated(false);
             mainDisp.setResizable(true);
+            mainDisp.setSize(1366, 768);
             mainDisp.setVisible(true);
             mainDisp.isFullscreen = false;
         }
@@ -643,7 +646,7 @@ public class SettingsUI extends javax.swing.JFrame {
                 colorPicker.setColor(mainDisp.teamMottoLabel.getForeground());
                 break;
             case 4:
-                colorPicker.setColor(mainDisp.currentRankLabel.getForeground());
+                colorPicker.setColor(mainDisp.nextMatchLabel.getForeground());
                 break;
             case 5:
                 colorPicker.setColor(mainDisp.jTable1.getForeground());

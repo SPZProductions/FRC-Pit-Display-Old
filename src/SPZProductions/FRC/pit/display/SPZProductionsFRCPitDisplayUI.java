@@ -51,6 +51,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
     public Team[] teams;
     public Team t;
     public DistrictRanking[] rankings;
+    
     public int matchCount = 0;
     
     /**
@@ -112,6 +113,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         getTeamMatches(teamNumber);
         
         updateRank();
+        getNextMatch();
     }
     
     public void update(){
@@ -130,7 +132,6 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         getTeamMatches(teamNumber);
         
         updateRank();
-        update.runLoop = true;
     }
     
     public class headerColor extends DefaultTableCellRenderer{
@@ -163,7 +164,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
                 teamMottoLabel.setForeground(color);
                 break;
             case 4:
-                currentRankLabel.setForeground(color);
+                nextMatchLabel.setForeground(color);
                 break;
             case 5:
                 jTable1.setForeground(color);
@@ -230,13 +231,15 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         Event e = tba.getEvent(eventKey, year);
         Team t = tba.getTeam(teamNumber);
         int row = -1;
+        matchCount = 0;
+        
         
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         removeAllRows();
         //for each match
         
         for (Match matches : e.matches){
-            
+                       
             String blueTeams = "";
             String redTeams = "";
             boolean nullMatch = false;
@@ -261,11 +264,11 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             }
             String matchNumber = null;
             
-           // if(matches.match_number < 10){
-                //matchNumber = "0" + matches.match_number;
-            //}else{
+            if(matches.match_number < 10){
+                matchNumber = "0" + matches.match_number;
+            }else{
                 matchNumber = "" + matches.match_number;
-            //}
+            }
             
             String mn;
             //qm makes no sence to me, change it to Q for Qualifying
@@ -290,8 +293,8 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
                         model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a>" + matches.redScore + " - <b>" + matches.blueScore + "</b>" + W + "</a></html>"});
                         renderer.colorModel.put(row, Color.BLUE);
                     }else{
-                        model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a><b>" + matches.redScore + " - " + matches.blueScore + "</b></a></html>"});
-                        renderer.colorModel.put(row, Color.WHITE);
+                        model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a><b>" + matches.redScore + " - " + matches.blueScore + " (T)</b></a></html>"});
+                        renderer.colorModel.put(row, Color.BLACK);
                     }
                     matchCount++;
                 } 
@@ -305,6 +308,52 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         autoSizeColums();
     }
     
+    public void getNextMatch(){
+        Event e = tba.getEvent(eventKey, year);
+        Team t = tba.getTeam(teamNumber);
+        
+        String blueTeams = "";
+        String redTeams = "";
+        
+        for(Match matches : e.matches){
+            
+            int i = 0;
+            for (String teamsL : matches.blueTeams){
+                String substring = teamsL.substring(3);
+                if(i <= 1){substring += ", "; i++;}
+                blueTeams += substring;
+            }
+           
+            int ii = 0;
+            for (String teams : matches.redTeams){
+                String substring = teams.substring(3);
+                if(ii <= 1){substring += ", "; ii++;}
+                redTeams += substring;
+            }
+            
+            if(Arrays.toString(matches.redTeams).contains("frc" + teamNumber)){
+                if(Arrays.toString(matches.scorableItems).contains("null")){
+                    nextMatchLabel.setText("Next Match: " + matches.match_number);
+                    nextMatchPartners.setText("Partners: " + redTeams);
+                    nextMatchOpponents.setText("Opponents: " + blueTeams);
+                    break;
+                }
+            }else if(Arrays.toString(matches.blueTeams).contains("frc" + teamNumber)){
+                if(Arrays.toString(matches.scorableItems).contains("null")){
+                    nextMatchLabel.setText("Next Match: " + matches.match_number);
+                    nextMatchPartners.setText("Partners: " + blueTeams);
+                    nextMatchOpponents.setText("Opponents: " + redTeams);
+                    break;
+                }
+            }else{
+                    nextMatchLabel.setText("No More Scheduled");
+                    nextMatchPartners.setText("Matches");
+                    nextMatchOpponents.setText("");
+                    break;
+                }
+        }
+    }
+    
     public void updateRank(){
         Event e = tba.getEvent(eventKey, year);
         long rank = 0;
@@ -314,9 +363,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         double rotor = 0;
         double touchpad = 0;
         double pressure = 0;
-        String record = "N/A";
-        
-        
+        String record = "N/A";   
         
         for(Team team : e.teams){
             if(teamNumber == (int) team.team_number){
@@ -331,7 +378,6 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
                 break;
             }
         }
-        /*TODO: Fix Match Counter */
         currentRankLabel.setText("<html><b>Current Rank: " + rank + "</b></html>");
         totalRPLabel.setText("<html><b>Ranking Score: </b>" + rankScore + "</html>");
         totalPlayedLabel.setText("<html><b>Total Played Matches: </b>" + matchCount + "</html>");
@@ -386,7 +432,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         teamNumberLabel = new javax.swing.JLabel();
         teamNameLabel = new javax.swing.JLabel();
         teamNicknameLabel = new javax.swing.JLabel();
-        currentRankLabel = new javax.swing.JLabel();
+        nextMatchLabel = new javax.swing.JLabel();
         totalRPLabel = new javax.swing.JLabel();
         totalRecordLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -399,6 +445,9 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         totalPlayedLabel = new javax.swing.JLabel();
         customSponsors = new javax.swing.JLabel();
+        currentRankLabel = new javax.swing.JLabel();
+        nextMatchOpponents = new javax.swing.JLabel();
+        nextMatchPartners = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1366, 768));
@@ -505,15 +554,15 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         getContentPane().add(teamNicknameLabel);
         teamNicknameLabel.setBounds(0, 50, 1360, 40);
 
-        currentRankLabel.setFont(new java.awt.Font("Tahoma", 0, 44)); // NOI18N
-        currentRankLabel.setText("Current Rank:");
-        currentRankLabel.addKeyListener(new java.awt.event.KeyAdapter() {
+        nextMatchLabel.setFont(new java.awt.Font("Tahoma", 0, 44)); // NOI18N
+        nextMatchLabel.setText("Next Match:");
+        nextMatchLabel.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
             }
         });
-        getContentPane().add(currentRankLabel);
-        currentRankLabel.setBounds(0, 160, 420, 50);
+        getContentPane().add(nextMatchLabel);
+        nextMatchLabel.setBounds(0, 190, 420, 40);
 
         totalRPLabel.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
         totalRPLabel.setText("Ranking Points: 14.0 ");
@@ -523,7 +572,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             }
         });
         getContentPane().add(totalRPLabel);
-        totalRPLabel.setBounds(0, 200, 440, 50);
+        totalRPLabel.setBounds(0, 310, 440, 50);
 
         totalRecordLabel.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
         totalRecordLabel.setText("Record (W-L-T): 14.0 ");
@@ -533,7 +582,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             }
         });
         getContentPane().add(totalRecordLabel);
-        totalRecordLabel.setBounds(0, 230, 440, 50);
+        totalRecordLabel.setBounds(0, 340, 440, 50);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setForeground(new java.awt.Color(51, 255, 255));
@@ -644,7 +693,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 320, 430, 160);
+        jPanel1.setBounds(0, 430, 430, 160);
 
         totalPlayedLabel.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
         totalPlayedLabel.setText("Total Played Matches: 14.0 ");
@@ -654,11 +703,31 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             }
         });
         getContentPane().add(totalPlayedLabel);
-        totalPlayedLabel.setBounds(0, 260, 440, 50);
+        totalPlayedLabel.setBounds(0, 370, 440, 50);
 
         customSponsors.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SPZProductions/FRC/pit/display/sponsors.png"))); // NOI18N
         getContentPane().add(customSponsors);
         customSponsors.setBounds(10, 770, 680, 300);
+
+        currentRankLabel.setFont(new java.awt.Font("Tahoma", 0, 44)); // NOI18N
+        currentRankLabel.setText("Current Rank:");
+        currentRankLabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                currentRankLabelformKeyPressed(evt);
+            }
+        });
+        getContentPane().add(currentRankLabel);
+        currentRankLabel.setBounds(0, 270, 420, 50);
+
+        nextMatchOpponents.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        nextMatchOpponents.setText("Opponents:");
+        getContentPane().add(nextMatchOpponents);
+        nextMatchOpponents.setBounds(0, 250, 410, 20);
+
+        nextMatchPartners.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        nextMatchPartners.setText("Alliance: ");
+        getContentPane().add(nextMatchPartners);
+        nextMatchPartners.setBounds(0, 230, 410, 20);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -680,6 +749,10 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
     private void totalHangsLabelformKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_totalHangsLabelformKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_totalHangsLabelformKeyPressed
+
+    private void currentRankLabelformKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_currentRankLabelformKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_currentRankLabelformKeyPressed
 
     /**
      * @param args the command line arguments
@@ -741,6 +814,9 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
     public javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable jTable1;
+    public javax.swing.JLabel nextMatchLabel;
+    public javax.swing.JLabel nextMatchOpponents;
+    public javax.swing.JLabel nextMatchPartners;
     public javax.swing.JLabel teamMottoLabel;
     public javax.swing.JLabel teamNameLabel;
     public javax.swing.JLabel teamNicknameLabel;
