@@ -713,6 +713,8 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         getContentPane().add(currentRankLabel);
         currentRankLabel.setBounds(0, 290, 420, 50);
 
+        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
         nextMatchOpponents.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         nextMatchOpponents.setForeground(new java.awt.Color(255, 255, 255));
         nextMatchOpponents.setText("Opponents:");
@@ -739,7 +741,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
                     .addComponent(nextMatchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nextMatchPartners, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nextMatchOpponents, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addGap(0, 4, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -749,7 +751,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
                 .addComponent(nextMatchPartners, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nextMatchOpponents, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2);
