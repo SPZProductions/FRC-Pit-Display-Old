@@ -110,7 +110,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         teamMottoLabel.setText("\"" + t.motto + "\"");
         teamNicknameLabel.setText(t.nickname);
         
-        getTeamMatches(teamNumber);
+        getTeamMatches();
         
         updateRank();
         getNextMatch();
@@ -129,9 +129,11 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         teamMottoLabel.setText("\"" + t.motto + "\"");
         teamNicknameLabel.setText(t.nickname);
         
-        getTeamMatches(teamNumber);
+        getTeamMatches();
         
         updateRank();
+        
+        getNextMatch();
     }
     
     public class headerColor extends DefaultTableCellRenderer{
@@ -227,7 +229,7 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
         }
     }
         
-    public void getTeamMatches(int teamNo){
+    public void getTeamMatches(){
         Event e = tba.getEvent(eventKey, year);
         Team t = tba.getTeam(teamNumber);
         int row = -1;
@@ -279,8 +281,8 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
             }
             boolean blue = true;
             if(!nullMatch){
-                if(Arrays.toString(matches.redTeams).contains("frc" + teamNo) || Arrays.toString(matches.blueTeams).contains("frc" + teamNo)){
-                    if(Arrays.toString(matches.redTeams).contains("frc" + teamNo)){blue = false;}
+                if(Arrays.toString(matches.redTeams).contains("frc" + teamNumber) || Arrays.toString(matches.blueTeams).contains("frc" + teamNumber)){
+                    if(Arrays.toString(matches.redTeams).contains("frc" + teamNumber)){blue = false;}
                     row++;
                     if(matches.redScore > matches.blueScore){
                         String W = " (L)";
@@ -299,8 +301,8 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
                     matchCount++;
                 } 
             }else{
-                row++;
-                if(Arrays.toString(matches.redTeams).contains("frc" + teamNo) || Arrays.toString(matches.blueTeams).contains("frc" + teamNo)){
+                if(Arrays.toString(matches.redTeams).contains("frc" + teamNumber) || Arrays.toString(matches.blueTeams).contains("frc" + teamNumber)){
+                    row++;
                     model.addRow(new Object[]{mn, redTeams, blueTeams, "<html><a><b>Unplayed</b></a></html>"});
                 }
             }
@@ -309,51 +311,53 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
     }
     
     public void getNextMatch(){
-        Event e = tba.getEvent(eventKey, year);
-        Team t = tba.getTeam(teamNumber);
-        
-        String blueTeams = "";
-        String redTeams = "";
+        Event e = tba.getEvent(eventKey, year);   
         
         for(Match matches : e.matches){
+            String blueTeams = "";
+            String redTeams = "";
+            boolean nullMatch = false;
             
-            int i = 0;
-            for (String teamsL : matches.blueTeams){
-                String substring = teamsL.substring(3);
-                if(i <= 1){substring += ", "; i++;}
-                blueTeams += substring;
-            }
-           
-            int ii = 0;
-            for (String teams : matches.redTeams){
-                String substring = teams.substring(3);
-                if(ii <= 1){substring += ", "; ii++;}
-                redTeams += substring;
+            if(Arrays.toString(matches.scorableItems).equals("null")){
+                nullMatch = true;
             }
             
-            if(Arrays.toString(matches.redTeams).contains("frc" + teamNumber)){
-                if(Arrays.toString(matches.scorableItems).contains("null")){
+            if(nullMatch){
+                int i = 0;
+                for (String teamsL : matches.blueTeams){
+                    String substring = teamsL.substring(3);
+                    if(i <= 1){substring += ", "; i++;}
+                    blueTeams += substring;
+                }
+
+                int ii = 0;
+                for (String teams : matches.redTeams){
+                    String substring = teams.substring(3);
+                    if(ii <= 1){substring += ", "; ii++;}
+                    redTeams += substring;
+                }
+                
+                //Check if the team is in that null match
+                if(Arrays.toString(matches.redTeams).contains("frc" + teamNumber)){
                     nextMatchLabel.setText("Next Match: " + matches.match_number);
                     nextMatchPartners.setText("Partners: " + redTeams);
                     nextMatchOpponents.setText("Opponents: " + blueTeams);
                     jPanel2.setBackground(Color.RED);
                     break;
-                }
-            }else if(Arrays.toString(matches.blueTeams).contains("frc" + teamNumber)){
-                if(Arrays.toString(matches.scorableItems).contains("null")){
+                }else if(Arrays.toString(matches.blueTeams).contains("frc" + teamNumber)){
                     nextMatchLabel.setText("Next Match: " + matches.match_number);
                     nextMatchPartners.setText("Partners: " + blueTeams);
                     nextMatchOpponents.setText("Opponents: " + redTeams);
                     jPanel2.setBackground(Color.BLUE);
                     break;
                 }
+                               
             }else{
-                    nextMatchLabel.setText("No More Scheduled");
-                    nextMatchPartners.setText("Matches");
-                    nextMatchOpponents.setText("");
-                    jPanel2.setBackground(Color.BLACK);
-                    break;
-                }
+                nextMatchLabel.setText("No More Scheduled");
+                nextMatchPartners.setText("Matches");
+                nextMatchOpponents.setText("");
+                jPanel2.setBackground(Color.BLACK);
+            }
         }
     }
     
