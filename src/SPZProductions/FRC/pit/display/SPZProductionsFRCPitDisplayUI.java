@@ -42,9 +42,9 @@ public class SPZProductionsFRCPitDisplayUI extends javax.swing.JFrame {
     public Color headerBgColor = Color.LIGHT_GRAY;
     public Color headerFgColor = Color.BLACK;
     
-    public int teamNumber = 1573;
+    public int teamNumber = 1322;
     public int year = 2017;
-    public String eventKey = "isde1";
+    public String eventKey = "miket";
     public TBA tba = new TBA();
     public Event e;
     public Match m;
