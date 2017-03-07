@@ -116,8 +116,6 @@ public class SettingsUI extends javax.swing.JFrame {
         teamSponsorText.setEnabled(true);
         teamMottoText.setEnabled(true);
         teamNameText.setEnabled(true);
-        
-        mainDisp.getTeamMatches(Integer.parseInt(teamNumberSpinner.getValue().toString()));
     }
     
     public void fullscreenToggle(){
